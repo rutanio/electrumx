@@ -3051,6 +3051,43 @@ class EXOSTestnet(EXOS):
             return hex_str_to_hash(EXOSTestnet.GENESIS_HASH)
 
 
+class RUTA(Coin):
+    NAME = "Rutanio"
+    SHORTNAME = "RUTA"
+    NET = "mainnet"
+    XPUB_VERBYTES = bytes.fromhex("0488b21e")
+    XPRV_VERBYTES = bytes.fromhex("0488ade4")
+    GENESIS_HASH = ('00000347c656a618f9bfef80a14fa66c'
+                    'f26e34ed4caeba0e3f072eb8b9408ee6')
+    P2PKH_VERBYTE = bytes.fromhex("3C")
+    P2SH_VERBYTE = [bytes.fromhex("7A")]
+    WIF_BYTE = bytes.fromhex("BC")
+    RPC_PORT = 6781
+    TX_COUNT = 1000
+    TX_COUNT_HEIGHT = 10000
+    TX_PER_BLOCK = 4
+    DAEMON = daemon.PreLegacyRPCDaemon
+    DESERIALIZER = lib_tx.DeserializerTxTime
+    PEERS = [
+        'electrum01.rutanio.com s t',
+        'electrum02.rutanio.com s t',
+        'electrum03.rutanio.com s t',
+        'electrum04.rutanio.com s t',
+        'electrum05.rutanio.com s t',
+        'electrum06.rutanio.com s t',
+        'electrum07.rutanio.com s t'
+    ]
+    
+    @classmethod
+    def header_hash(cls, header):
+        version, = util.unpack_le_uint32_from(header)
+        
+        if version > 2:
+            return double_sha256(header)
+        else:
+            return hex_str_to_hash(RUTA.GENESIS_HASH)
+
+
 class SmartCash(Coin):
     NAME = "SmartCash"
     SHORTNAME = "SMART"
