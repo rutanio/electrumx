@@ -3068,6 +3068,8 @@ class RUTA(Coin):
     TX_PER_BLOCK = 4
     DAEMON = daemon.PreLegacyRPCDaemon
     DESERIALIZER = lib_tx.DeserializerTxTime
+    ESTIMATE_FEE = 0.0001
+    RELAY_FEE = 0.0001
     PEERS = [
         'electrum01.rutanio.com s t',
         'electrum02.rutanio.com s t',
@@ -3077,11 +3079,11 @@ class RUTA(Coin):
         'electrum06.rutanio.com s t',
         'electrum07.rutanio.com s t'
     ]
-    
+
     @classmethod
     def header_hash(cls, header):
         version, = util.unpack_le_uint32_from(header)
-        
+
         if version > 2:
             return double_sha256(header)
         else:
